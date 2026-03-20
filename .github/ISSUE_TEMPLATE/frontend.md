@@ -1,8 +1,8 @@
 ---
 name: "\b프론트엔드"
 about: 프론트엔드 전용 이슈 생성 템플릿
-title: '[FRONT] 여기에 이슈 이름을 적어주세요.'
-labels: ''
+title: '여기에 이슈 이름을 적어주세요.'
+labels: 'FRONTEND'
 assignees: ''
 
 ---

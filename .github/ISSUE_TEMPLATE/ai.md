@@ -1,8 +1,8 @@
 ---
-name: "\b백엔드"
-about: 백엔드 전용 이슈 생성 템플릿
+name: "\bAI"
+about: AI 전용 이슈 생성 템플릿
 title: '여기에 이슈 이름을 적어주세요.'
-labels: 'BACKEND'
+labels: 'AI'
 assignees: ''
 
 ---
