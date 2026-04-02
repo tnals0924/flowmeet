@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import java.util.Optional;
 import kr.flowmeet.auth.exception.AuthErrorCode;
 import kr.flowmeet.auth.exception.AuthException;
+import kr.flowmeet.auth.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

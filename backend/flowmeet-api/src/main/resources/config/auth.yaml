@@ -3,6 +3,9 @@ jwt:
   access-token-expiry: 1800000
   issuer: flowmeet
 
+cors:
+  allowed-origins: http://localhost:3000, http://localhost:8080
+
 spring:
   security:
     oauth2:

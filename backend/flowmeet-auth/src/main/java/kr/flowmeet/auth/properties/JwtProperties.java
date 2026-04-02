@@ -1,4 +1,4 @@
-package kr.flowmeet.auth.jwt;
+package kr.flowmeet.auth.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
