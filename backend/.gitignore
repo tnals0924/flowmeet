@@ -39,6 +39,6 @@ out/
 ### Environment ###
 *.env
 .env.*
+**/application-local.yaml
 
 docs
-
