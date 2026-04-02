@@ -1,0 +1,43 @@
+package kr.flowmeet.domain.project.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "project_urls")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class ProjectUrl {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "project_url_id")
+    private Long id;
+
+    @Column(name = "project_id", nullable = false)
+    private Long projectId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", insertable = false, updatable = false)
+    private Project project;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String url;
+
+    @Builder
+    public ProjectUrl(Long projectId, String url) {
+        this.projectId = projectId;
+        this.url = url;
+    }
+}
