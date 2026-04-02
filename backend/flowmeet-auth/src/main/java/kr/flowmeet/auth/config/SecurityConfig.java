@@ -1,0 +1,58 @@
+package kr.flowmeet.auth.config;
+
+import java.util.Arrays;
+import java.util.List;
+import kr.flowmeet.auth.jwt.JwtAuthenticationFilter;
+import kr.flowmeet.auth.security.SecurityWhiteList;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+@Configuration
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private static final List<String> ALLOWED_METHODS = Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
+    private static final List<String> ALLOWED_HEADERS = Arrays.asList("Content-Type", "Authorization");
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        auth ->
+                        auth.requestMatchers(SecurityWhiteList.PUBLIC_WHITE_LIST).permitAll()
+                                .requestMatchers(SecurityWhiteList.SWAGGER_WHITE_LIST).permitAll()
+                                .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return httpSecurity.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
+        corsConfiguration.setAllowedMethods(ALLOWED_METHODS);
+        corsConfiguration.setAllowedHeaders(ALLOWED_HEADERS);
+
+        UrlBasedCorsConfigurationSource urlBasedSource = new UrlBasedCorsConfigurationSource();
+        urlBasedSource.registerCorsConfiguration("/**", corsConfiguration);
+
+        return urlBasedSource;
+    }
+}
