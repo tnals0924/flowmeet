@@ -1,4 +1,4 @@
-package kr.flowmeet.api.dto;
+package kr.flowmeet.api.common.dto;
 
 import kr.flowmeet.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;

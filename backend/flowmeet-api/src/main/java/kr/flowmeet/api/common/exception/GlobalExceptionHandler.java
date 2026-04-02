@@ -1,6 +1,6 @@
-package kr.flowmeet.api.exception;
+package kr.flowmeet.api.common.exception;
 
-import kr.flowmeet.api.dto.CommonResponse;
+import kr.flowmeet.api.common.dto.CommonResponse;
 import kr.flowmeet.common.exception.CustomException;
 import kr.flowmeet.common.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
