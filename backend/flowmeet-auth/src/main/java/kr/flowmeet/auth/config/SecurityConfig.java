@@ -3,6 +3,7 @@ package kr.flowmeet.auth.config;
 import java.util.Arrays;
 import java.util.List;
 import kr.flowmeet.auth.jwt.JwtAuthenticationFilter;
+import kr.flowmeet.auth.properties.CorsProperties;
 import kr.flowmeet.auth.security.SecurityWhiteList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,10 +44,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource(CorsProperties corsProperties) {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList(corsProperties.allowedOrigins()));
         corsConfiguration.setAllowedMethods(ALLOWED_METHODS);
         corsConfiguration.setAllowedHeaders(ALLOWED_HEADERS);
 

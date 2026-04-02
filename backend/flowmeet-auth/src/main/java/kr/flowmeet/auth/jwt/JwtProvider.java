@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import java.util.Optional;
 import kr.flowmeet.auth.exception.AuthErrorCode;
 import kr.flowmeet.auth.exception.AuthException;
+import kr.flowmeet.auth.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,14 @@ public class JwtProvider {
     private final JwtProperties jwtProperties;
 
     private SecretKey createSecretKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(jwtProperties.getSecretKey());
+        byte[] keyBytes = Base64.getDecoder().decode(jwtProperties.secretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(final Long userId, final String email, final String name) {
         Date now = new Date();
         return makeToken(
-                new Date(now.getTime() + jwtProperties.getAccessTokenExpiry()),
+                new Date(now.getTime() + jwtProperties.accessTokenExpiry()),
                 String.valueOf(userId),
                 Map.of(
                         "email", email,
@@ -45,7 +46,7 @@ public class JwtProvider {
 
         var builder = Jwts.builder()
                 .header().type("JWT").and()
-                .issuer(jwtProperties.getIssuer())
+                .issuer(jwtProperties.issuer())
                 .issuedAt(now)
                 .expiration(expiry)
                 .subject(subject);
