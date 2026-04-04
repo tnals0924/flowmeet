@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.media.IntegerSchema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
+import java.util.LinkedHashSet;
 import kr.flowmeet.common.exception.ErrorCode;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ApiErrorCodeOperationCustomizer implements OperationCustomizer {
 
     @Override
     public Operation customize(Operation operation, HandlerMethod handlerMethod) {
-        List<ErrorCode> errorCodes = new ArrayList<>();
+        Set<ErrorCode> errorCodes = new LinkedHashSet<>();
 
         collectFromApiErrorCodes(handlerMethod, errorCodes);
         collectFromApiErrorCode(handlerMethod, errorCodes);
@@ -81,7 +82,7 @@ public class ApiErrorCodeOperationCustomizer implements OperationCustomizer {
         return operation;
     }
 
-    private void collectFromApiErrorCodes(HandlerMethod handlerMethod, List<ErrorCode> result) {
+    private void collectFromApiErrorCodes(HandlerMethod handlerMethod, Set<ErrorCode> result) {
         ApiErrorCodes annotation = handlerMethod.getMethodAnnotation(ApiErrorCodes.class);
         if (annotation == null) {
             return;
@@ -94,7 +95,7 @@ public class ApiErrorCodeOperationCustomizer implements OperationCustomizer {
         }
     }
 
-    private void collectFromApiErrorCode(HandlerMethod handlerMethod, List<ErrorCode> result) {
+    private void collectFromApiErrorCode(HandlerMethod handlerMethod, Set<ErrorCode> result) {
         ApiErrorCode single = handlerMethod.getMethodAnnotation(ApiErrorCode.class);
         ApiErrorCodeGroup group = handlerMethod.getMethodAnnotation(ApiErrorCodeGroup.class);
 
