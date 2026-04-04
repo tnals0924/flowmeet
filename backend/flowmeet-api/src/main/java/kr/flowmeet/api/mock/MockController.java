@@ -1,5 +1,6 @@
 package kr.flowmeet.api.mock;
 
+import jakarta.validation.Valid;
 import kr.flowmeet.api.common.dto.CommonResponse;
 import kr.flowmeet.api.mock.dto.CreateMockRequest;
 import kr.flowmeet.api.mock.dto.GetAllMocksResponse;
@@ -19,7 +20,7 @@ public class MockController {
     private final MockFacade mockFacade;
 
     @PostMapping
-    public CommonResponse<?> createMock(@UserId Long userId, @RequestBody CreateMockRequest request) {
+    public CommonResponse<?> createMock(@UserId Long userId, @Valid @RequestBody CreateMockRequest request) {
         mockFacade.createMock(userId, request);
         return CommonResponse.ok();
     }

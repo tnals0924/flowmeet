@@ -24,8 +24,12 @@ public record CommonResponse<T>(
         return new CommonResponse<>(errorCode.getHttpStatus().value(), errorCode.name(), errorCode.getMessage(), null);
     }
 
+    public static CommonResponse<?> error(final Exception exception, final HttpStatus httpStatus, final String message) {
+        return new CommonResponse<>(httpStatus.value(), exception.getClass().getSimpleName(), message, null);
+    }
+
     public static CommonResponse<?> error(final Exception exception, final HttpStatus httpStatus) {
-        return new CommonResponse<>(httpStatus.value(), exception.getClass().getSimpleName(), exception.getMessage(), null);
+        return error(exception, httpStatus, exception.getMessage());
     }
 
     public static CommonResponse<?> error(final Exception exception) {
