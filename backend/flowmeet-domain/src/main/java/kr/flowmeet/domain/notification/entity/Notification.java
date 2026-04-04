@@ -11,20 +11,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import kr.flowmeet.domain.common.BaseCreatedTimeEntity;
 import kr.flowmeet.domain.node.entity.Node;
 import kr.flowmeet.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "notifications")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notification {
+public class Notification extends BaseCreatedTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,10 +50,6 @@ public class Notification {
 
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
-
-    @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
     @Builder
     public Notification(Long userId, Long nodeId, NotificationType type) {
