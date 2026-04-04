@@ -123,6 +123,20 @@ Controller → Facade → Service 호출 구조:
 - Facade에서 여러 도메인 Service를 조합
 - 메서드 파라미터에 `final` 키워드 사용
 
+## Validation (유효성 검증)
+
+- Request DTO 필드에 Jakarta Validation 어노테이션 사용 (`@NotBlank`, `@NotNull`, `@Size` 등)
+- 검증 메시지는 한글로 작성: `@NotBlank(message = "이름은 필수로 입력해 주세요.")`
+- Controller 메서드 파라미터에 `@Valid` 선언하여 검증 활성화:
+
+```java
+@PostMapping
+public CommonResponse<?> createMock(@UserId Long userId, @Valid @RequestBody CreateMockRequest request) { ... }
+```
+
+- 검증 실패 시 `MethodArgumentNotValidException` → `GlobalExceptionHandler`에서 400 응답 처리
+- 에러 메시지는 첫 번째 `FieldError`의 message를 반환
+
 ## 예외 처리
 
 - `ErrorCode` 인터페이스 (getHttpStatus, getMessage, name)
